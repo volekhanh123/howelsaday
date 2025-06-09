@@ -5,30 +5,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: FirebaseOptions(
+    options: const FirebaseOptions(
       apiKey: "AIzaSyCws5nk8EOvJ8p-RevmbOzWIFhizqv2azU",
       authDomain: "how-s-elsa-day.firebaseapp.com",
       projectId: "how-s-elsa-day",
-      storageBucket: "how-s-elsa-day.firebasestorage.app",
+      storageBucket: "how-s-elsa-day.appspot.com",
       messagingSenderId: "210380627605",
       appId: "1:210380627605:web:ff10c40cb64cc7a906459c",
     ),
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "How's Elsa Day?",
       theme: ThemeData(primarySwatch: Colors.pink),
-      home: MoodSliderScreen(),
+      home: const MoodSliderScreen(),
     );
   }
 }
 
 class MoodSliderScreen extends StatefulWidget {
+  const MoodSliderScreen({super.key});
+
   @override
   _MoodSliderScreenState createState() => _MoodSliderScreenState();
 }
@@ -71,8 +74,8 @@ class _MoodSliderScreenState extends State<MoodSliderScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                Text("😢", style: TextStyle(fontSize: 30)),
-                Text("😊", style: TextStyle(fontSize: 30)),
+                const Text("😢", style: TextStyle(fontSize: 30)),
+                const Text("😊", style: TextStyle(fontSize: 30)),
               ],
             ),
             Slider(
