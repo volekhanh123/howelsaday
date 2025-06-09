@@ -14,21 +14,23 @@ void main() async {
       appId: "1:210380627605:web:ff10c40cb64cc7a906459c",
     ),
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "How's Elsa Day?",
       theme: ThemeData(primarySwatch: Colors.pink),
-      home: MoodSliderScreen(),
+      home: const MoodSliderScreen(),
     );
   }
 }
 
 class MoodSliderScreen extends StatefulWidget {
+  const MoodSliderScreen({super.key});
   @override
   _MoodSliderScreenState createState() => _MoodSliderScreenState();
 }
@@ -59,44 +61,96 @@ class _MoodSliderScreenState extends State<MoodSliderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[50],
-      appBar: AppBar(title: Text("How's Elsa Day?"), centerTitle: true),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(moodText, style: TextStyle(fontSize: 40)),
-            SizedBox(height: 40),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("😢", style: TextStyle(fontSize: 30)),
-                Text("😊", style: TextStyle(fontSize: 30)),
-              ],
-            ),
-            Slider(
-              value: _moodValue,
-              min: 0,
-              max: 100,
-              divisions: 100,
-              label: _moodValue.round().toString(),
-              onChanged: (double value) {
-                setState(() {
-                  _moodValue = value;
-                });
-              },
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: _sendMood,
-              child: Text("Gửi cảm xúc 💌"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.pink,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text("How's Elsa Day?"),
+        centerTitle: true,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFFFCE4EC), Color(0xFFFFCDD2)],
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    moodText,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text("😢", style: TextStyle(fontSize: 30)),
+                      Text("😊", style: TextStyle(fontSize: 30)),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.pink,
+                      inactiveTrackColor: Colors.pinkAccent.withOpacity(0.3),
+                      thumbColor: Colors.pinkAccent,
+                      overlayColor: Colors.pinkAccent.withOpacity(0.2),
+                    ),
+                    child: Slider(
+                      value: _moodValue,
+                      min: 0,
+                      max: 100,
+                      divisions: 100,
+                      label: _moodValue.round().toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          _moodValue = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: _sendMood,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      "Gửi cảm xúc 💌",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
