@@ -23,12 +23,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "How's Elsa Day?",
       theme: ThemeData(primarySwatch: Colors.pink),
-      home: MoodSliderScreen(),
+      home: const MoodSliderScreen(),
     );
   }
 }
 
 class MoodSliderScreen extends StatefulWidget {
+  final FirebaseFirestore firestore;
+
+  const MoodSliderScreen({Key? key, FirebaseFirestore? firestore})
+      : firestore = firestore ?? FirebaseFirestore.instance,
+        super(key: key);
+
   @override
   _MoodSliderScreenState createState() => _MoodSliderScreenState();
 }
@@ -49,7 +55,7 @@ class _MoodSliderScreenState extends State<MoodSliderScreen> {
       'timestamp': Timestamp.now(),
     };
 
-    await FirebaseFirestore.instance.collection('moods').add(moodData);
+    await widget.firestore.collection('moods').add(moodData);
 
     ScaffoldMessenger.of(
       context,
